@@ -3,7 +3,7 @@
 
 const DEMO_REGISTRY = [
   {
-    name: 'KitchenAid Stand Mixer',
+    name: 'KitchenAid Mixer',
     category: 'Kitchen',
     description: 'Artisan Series 5-quart stand mixer in Misty Blue. Perfect for our weekend baking adventures.',
     price: 449,
