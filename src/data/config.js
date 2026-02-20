@@ -49,6 +49,25 @@ const config = {
   photoBandQuote: '"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."',
   photoBandAttr:  '— Maya Angelou',
 
+  // ── Payment details (shown in the "Send Money" gift flow) ─
+  // Replace placeholders with your real account details
+  payment: {
+    bank: {
+      name:          'Ghana Commercial Bank',       // Bank name
+      logo:          '🏦',                          // Replace with bank logo URL if you have one
+      accountName:   'Eleanor & James Wedding',
+      accountNumber: '1234567890',
+      branch:        'Accra Main Branch',
+    },
+    mobileMoney: {
+      provider:    'MTN Mobile Money',             // e.g. MTN, Vodafone, AirtelTigo
+      logo:        '📱',                           // Replace with provider logo URL if you have one
+      number:      '024 000 0000',
+      accountName: 'Eleanor Mensah',
+    },
+    referenceFormat: 'Use your name + item ID as reference (e.g. "John Smith – EJ-001")',
+  },
+
   // ── Meal options ─────────────────────────────────────────
   mealOptions: [
     'Intercontinental — Rice Dishes with Salads',

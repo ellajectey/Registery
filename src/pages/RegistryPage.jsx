@@ -3,23 +3,28 @@ import config from '../data/config'
 import DEMO_REGISTRY from '../data/demoRegistry'
 import PageHero from '../components/PageHero'
 import Footer from '../components/Footer'
+import GiftModal from '../components/GiftModal'
 
 const fmt = (p) => {
   const n = parseFloat(String(p).replace(/[^0-9.]/g, ''))
-  return isNaN(n) ? String(p) : '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 })
+  return isNaN(n) ? String(p) : 'GHS' + n.toLocaleString('en-US', { maximumFractionDigits: 0 })
 }
 
-function RegistryCard({ item, idx }) {
-  const remaining  = Math.max(0, item.quantity - item.purchased)
-  const pct        = Math.min(100, Math.round((item.purchased / item.quantity) * 100))
-  const isFulfilled = remaining === 0
-  const isPartial   = item.purchased > 0 && !isFulfilled
+function getRibbon(item) {
+  if (item.status === 'fulfilled' || item.purchased >= item.quantity)
+    return { cls: 'ribbon-fulfilled', label: 'Fulfilled' }
+  if (item.status === 'pending')
+    return { cls: 'ribbon-pending', label: 'Pending Confirmation' }
+  if (item.purchased > 0)
+    return { cls: 'ribbon-partial', label: 'Partially Gifted' }
+  return { cls: 'ribbon-available', label: 'Available' }
+}
 
-  const [ribbon, ribbonLabel] = isFulfilled
-    ? ['ribbon-fulfilled', 'Fulfilled']
-    : isPartial
-    ? ['ribbon-partial', 'Partially Gifted']
-    : ['ribbon-available', 'Available']
+function RegistryCard({ item, idx, onGift }) {
+  const ribbon      = getRibbon(item)
+  const remaining   = Math.max(0, item.quantity - item.purchased)
+  const pct         = Math.min(100, Math.round((item.purchased / item.quantity) * 100))
+  const isUnavailable = item.status === 'fulfilled' || item.status === 'pending' || remaining === 0
 
   return (
     <div className="w-reg-card" style={{ animationDelay: `${idx * 0.06}s` }}>
@@ -31,7 +36,8 @@ function RegistryCard({ item, idx }) {
           loading="lazy"
           onError={e => { e.target.src = 'https://images.unsplash.com/photo-1606293926075-69a5658f1c1c?w=400&q=80' }}
         />
-        <div className={`w-reg-ribbon ${ribbon}`}>{ribbonLabel}</div>
+        <div className={`w-reg-ribbon ${ribbon.cls}`}>{ribbon.label}</div>
+        <div className="w-reg-item-id">{item.id}</div>
       </div>
 
       <div className="w-reg-bar">
@@ -42,6 +48,7 @@ function RegistryCard({ item, idx }) {
         {item.category && <div className="w-reg-cat">{item.category}</div>}
         <div className="w-reg-name">{item.name}</div>
         <div className="w-reg-desc">{item.description}</div>
+
         <div className="w-reg-meta">
           <div className="w-reg-price">{fmt(item.price)}</div>
           <div className="w-reg-qty">
@@ -49,14 +56,17 @@ function RegistryCard({ item, idx }) {
             {item.purchased} of {item.quantity} gifted
           </div>
         </div>
-        {item.link && !isFulfilled ? (
-          <a href={item.link} target="_blank" rel="noreferrer" className="w-reg-btn">
-            <span>Purchase This Item</span>
-          </a>
-        ) : (
+
+        {isUnavailable ? (
           <div className="w-reg-btn done">
-            <span>{isFulfilled ? '✓ Fully Gifted' : 'View Item'}</span>
+            <span>
+              {item.status === 'pending' ? '⏳ Pending Confirmation' : '✓ Fully Gifted'}
+            </span>
           </div>
+        ) : (
+          <button className="w-reg-btn" onClick={() => onGift(item)}>
+            <span>Gift This Item</span>
+          </button>
         )}
       </div>
     </div>
@@ -64,10 +74,11 @@ function RegistryCard({ item, idx }) {
 }
 
 export default function RegistryPage() {
-  const [items,    setItems]    = useState([])
-  const [filter,   setFilter]   = useState('All')
-  const [status,   setStatus]   = useState('loading')
-  const [barWidth, setBarWidth] = useState(0)
+  const [items,     setItems]     = useState([])
+  const [filter,    setFilter]    = useState('All')
+  const [status,    setStatus]    = useState('loading')
+  const [barWidth,  setBarWidth]  = useState(0)
+  const [modalItem, setModalItem] = useState(null)
 
   useEffect(() => {
     if (!config.REGISTRY_URL) {
@@ -81,14 +92,19 @@ export default function RegistryPage() {
       .catch(() => setStatus('error'))
   }, [])
 
-  const fulfilled  = items.filter(i => i.purchased >= i.quantity).length
-  const pct        = items.length ? Math.round((fulfilled / items.length) * 100) : 0
-  const categories = ['All', ...new Set(items.map(i => i.category).filter(Boolean))]
-  const visible    = filter === 'All' ? items : items.filter(i => i.category === filter)
+  const fulfilled = items.filter(i => i.status === 'fulfilled' || i.purchased >= i.quantity).length
+  const pct       = items.length ? Math.round((fulfilled / items.length) * 100) : 0
 
   useEffect(() => {
     if (status === 'ready') setTimeout(() => setBarWidth(pct), 200)
   }, [status, pct])
+
+  const handleGifted = (itemId) => {
+    setItems(prev => prev.map(i => i.id === itemId ? { ...i, status: 'pending' } : i))
+  }
+
+  const categories = ['All', ...new Set(items.map(i => i.category).filter(Boolean))]
+  const visible    = filter === 'All' ? items : items.filter(i => i.category === filter)
 
   return (
     <div className="w-reg-page">
@@ -100,7 +116,6 @@ export default function RegistryPage() {
 
       {status === 'ready' && (
         <>
-          {/* Progress summary */}
           <div className="w-reg-summary">
             <div className="w-reg-stat">
               <div className="num">{items.length}</div>
@@ -121,7 +136,6 @@ export default function RegistryPage() {
             </div>
           </div>
 
-          {/* Category filters */}
           <div className="w-reg-filters">
             {categories.map(c => (
               <button
@@ -134,10 +148,9 @@ export default function RegistryPage() {
             ))}
           </div>
 
-          {/* Cards */}
           <div className="w-reg-grid">
             {visible.map((item, i) => (
-              <RegistryCard key={`${item.name}-${i}`} item={item} idx={i} />
+              <RegistryCard key={`${item.id}-${i}`} item={item} idx={i} onGift={setModalItem} />
             ))}
           </div>
         </>
@@ -152,11 +165,16 @@ export default function RegistryPage() {
 
       {status === 'error' && (
         <div className="w-reg-error">
-          <p>
-            Could not load registry. Paste your Apps Script URL into{' '}
-            <code>REGISTRY_URL</code> in <code>src/data/config.js</code>.
-          </p>
+          <p>Could not load registry. Paste your Apps Script URL into <code>REGISTRY_URL</code> in <code>src/data/config.js</code>.</p>
         </div>
+      )}
+
+      {modalItem && (
+        <GiftModal
+          item={modalItem}
+          onClose={() => setModalItem(null)}
+          onGifted={(id) => { handleGifted(id); setModalItem(null) }}
+        />
       )}
 
       <Footer />
