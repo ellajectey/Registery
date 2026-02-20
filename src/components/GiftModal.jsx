@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import config from '../data/config'
+import { postToSheet } from '../utils/sheetsApi'
 
 // ── Step identifiers ──────────────────────────────────────
 // 'choose'   → initial 3-option screen
@@ -43,13 +44,7 @@ export default function GiftModal({ item, onClose, onGifted }) {
       timestamp: new Date().toISOString(),
     }
     if (config.REGISTRY_URL) {
-      try {
-        await fetch(config.REGISTRY_URL, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify(payload),
-        })
-      } catch (_) { /* still proceed */ }
+      try { await postToSheet(payload) } catch (_) { /* still proceed */ }
     }
     onGifted(item.id, type)   // update local state in parent
     setStep('done')
@@ -90,7 +85,7 @@ export default function GiftModal({ item, onClose, onGifted }) {
               <button className="gm-option" onClick={() => setStep('book')}>
                 <span className="gm-option-icon">🎁</span>
                 <div>
-                  <div className="gm-option-label">Book for Delivery</div>
+                  <div className="gm-option-label">Book for Delivery At Wedding</div>
                   <div className="gm-option-desc">Reserve the item and bring it to the traditional or reception</div>
                 </div>
                 <span className="gm-option-arrow">→</span>

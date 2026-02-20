@@ -60,11 +60,11 @@ export default function HomePage({ navigate }) {
           </div>
           <p className="w-hero-date">{config.date}</p>
           <p className="w-hero-venue">{config.venue}</p>
-          <div className="w-hero-cta">
+          {/* <div className="w-hero-cta">
             <button className="w-btn" onClick={() => navigate('rsvp')}>
               <span>Kindly RSVP</span>
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import config from '../data/config'
-import DEMO_REGISTRY from '../data/demoRegistry'
+// registry items are provided by parent App via props
 import PageHero from '../components/PageHero'
 import Footer from '../components/Footer'
 import GiftModal from '../components/GiftModal'
@@ -73,24 +72,10 @@ function RegistryCard({ item, idx, onGift }) {
   )
 }
 
-export default function RegistryPage() {
-  const [items,     setItems]     = useState([])
+export default function RegistryPage({ items = [], setItems = () => {}, status = 'loading' }) {
   const [filter,    setFilter]    = useState('All')
-  const [status,    setStatus]    = useState('loading')
   const [barWidth,  setBarWidth]  = useState(0)
   const [modalItem, setModalItem] = useState(null)
-
-  useEffect(() => {
-    if (!config.REGISTRY_URL) {
-      setItems(DEMO_REGISTRY)
-      setStatus('ready')
-      return
-    }
-    fetch(config.REGISTRY_URL)
-      .then(r => r.json())
-      .then(d => { setItems(d.items || []); setStatus('ready') })
-      .catch(() => setStatus('error'))
-  }, [])
 
   const fulfilled = items.filter(i => i.status === 'fulfilled' || i.purchased >= i.quantity).length
   const pct       = items.length ? Math.round((fulfilled / items.length) * 100) : 0

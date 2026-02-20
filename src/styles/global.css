@@ -864,3 +864,32 @@ body {
   .gm-panel { max-height: 95vh; }
   .gm-confirm-actions { flex-direction: column; }
 }
+
+/* Floating refresh button for registry (appended) */
+.refresh-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 500;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--deep-purple);
+  color: var(--cream);
+  border: none;
+  box-shadow: 0 10px 30px rgba(26,16,32,0.25);
+  cursor: pointer;
+  font-size: 1.15rem;
+}
+.refresh-btn.loading { opacity: 0.85; pointer-events: none; }
+.refresh-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}

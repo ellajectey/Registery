@@ -2,6 +2,7 @@ import { useState } from 'react'
 import config from '../data/config'
 import PageHero from '../components/PageHero'
 import Footer from '../components/Footer'
+import { postToSheet } from '../utils/sheetsApi'
 
 const INITIAL_FORM = {
   firstName: '',
@@ -27,15 +28,8 @@ export default function RsvpPage() {
     setSubmitting(true)
 
     if (config.RSVP_URL) {
-      try {
-        await fetch(config.RSVP_URL, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ ...form, timestamp: new Date().toISOString() }),
-        })
-      } catch (_) {
-        // Still show success — data may have saved despite CORS error
-      }
+      try { await postToSheet({ ...form, timestamp: new Date().toISOString() }) }
+      catch (_) { /* still show success */ }
     }
 
     setDone(true)

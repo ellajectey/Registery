@@ -22,8 +22,8 @@ const config = {
   // ── Google Sheets integration ────────────────────────────
   // Paste your Apps Script Web App URL into both fields below.
   // Leave empty to see demo/placeholder data.
-  REGISTRY_URL: '',
-  RSVP_URL:     '',
+  REGISTRY_URL: 'https://script.google.com/macros/s/AKfycbyIIBPo52273PSHqQRlTq2Ivfk1X6GeaB3yAtFXVIr_TqxOB68aDoA7_D1n3dYC-eG0/exec',
+  RSVP_URL:     'https://script.google.com/macros/s/AKfycbyIIBPo52273PSHqQRlTq2Ivfk1X6GeaB3yAtFXVIr_TqxOB68aDoA7_D1n3dYC-eG0/exec',
 
   // ── Images ──────────────────────────────────────────────
   // Replace these with your own photo URLs, or drop photos into
@@ -33,9 +33,9 @@ const config = {
 
   // ── Ceremony details cards ───────────────────────────────
   details: [
-    { icon: '🕍', label: 'Traditional Wedding',      body: 'Adenta Frafraha', note: '8:00 AM · Closing 11:30 AM' },
-    { icon: '🥂', label: 'Church Wedding', body: 'ICGC Holy Ghost Temple',      note: 'Small & Private' },
-    { icon: '🌿', label: 'Reception',     body: 'East Legon',    note: '2:00 PM · Until late evening' },
+    { icon: '🥻', label: 'Traditional Wedding',      body: 'Adenta Frafraha', note: '8:00 AM · Closing 11:30 AM' },
+    { icon: '🕍', label: 'Church Wedding', body: 'ICGC Holy Ghost Temple',      note: 'Small & Private' },
+    { icon: '🥂', label: 'Reception',     body: 'East Legon',    note: '2:00 PM · Until late evening' },
     { icon: '👗', label: 'Dress Code',    body: 'A touch of purple and/or green',       note: 'We are just glad to see you!' },
   ],
 
