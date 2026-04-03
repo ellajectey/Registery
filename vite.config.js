@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // ─────────────────────────────────────────────────────────────
 //  PASTE YOUR APPS SCRIPT URL HERE (just this one place)
 // ─────────────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = 'AKfycbze34ftPhtwddYXMpYmjA-XkC3a713YWYRGGLRfJEf93OX2oF906HwOqIjH0lvgFSV1'
+const APPS_SCRIPT_URL = 'AKfycbw__O7Tt_Ti2W2SUZb-iyqv-Kl_dvGZCXTtYF9a-zyVPVEmfm97Uzc_4xQO9QdsWVEs'
 
 export default defineConfig({
   plugins: [react()],

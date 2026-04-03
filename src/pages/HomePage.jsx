@@ -28,7 +28,7 @@ export default function HomePage({ navigate }) {
       <section className="w-hero">
         <img
           className="w-hero-img"
-          src={config.heroImage}
+          src={config.heroImage4}
           alt={`${config.names.partner1} and ${config.names.partner2}`}
         />
         <div className="w-hero-overlay" />
