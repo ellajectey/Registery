@@ -45,7 +45,7 @@ const config = {
 
   // ── Our Story ────────────────────────────────────────────
   story: [
-    'A match made that felt like coming home. Eight years of adventure, friendship, love and support — we are ready to celebrate with everyone we love and helped to make us happen.',
+    'A match made that felt like coming home. Eight years of adventure, friendship, love and support — we are ready to celebrate with everyone we love that helped to make us happen.',
     'We will be joined at ICGC Holy Ghost Temple — The place where we first met.',
   ],
 
@@ -57,17 +57,17 @@ const config = {
   // Replace placeholders with your real account details
   payment: {
     bank: {
-      name:          'Ghana Commercial Bank',       // Bank name
+      name:          'Ecobank',       // Bank name
       logo:          '🏦',                          // Replace with bank logo URL if you have one
-      accountName:   'Eleanor & James Wedding',
-      accountNumber: '1234567890',
+      accountName:   'Jonathan Gbaja',
+      accountNumber: '411 2006 793',
       branch:        'Accra Main Branch',
     },
     mobileMoney: {
-      provider:    'MTN Mobile Money',             // e.g. MTN, Vodafone, AirtelTigo
+      provider:    'Telecel Cash',             // e.g. MTN, Vodafone, AirtelTigo
       logo:        '📱',                           // Replace with provider logo URL if you have one
-      number:      '024 000 0000',
-      accountName: 'Eleanor Mensah',
+      number:      '050 950 2236',
+      accountName: 'Jonathan Gbaja',
     },
     referenceFormat: 'Use your name + item ID as reference (e.g. "John Smith – EJ-001")',
   },

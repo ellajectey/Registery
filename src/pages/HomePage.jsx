@@ -113,7 +113,7 @@ export default function HomePage({ navigate }) {
       </section>
 
       {/* ── DETAILS ── */}
-      <section className="w-details">
+      {/* <section className="w-details">
         <span className="w-eyebrow" style={{ textAlign: 'center', color: 'var(--gold)' }}>
           Wedding Details
         </span>
@@ -127,7 +127,7 @@ export default function HomePage({ navigate }) {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <Footer />
     </div>

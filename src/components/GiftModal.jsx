@@ -10,7 +10,7 @@ import { postToSheet } from '../utils/sheetsApi'
 // 'direct'   → redirect to external source
 // 'done'     → success screen
 
-export default function GiftModal({ item, onClose, onGifted }) {
+export default function GiftModal({ item, onClose, onGifted, currency }) {
   const [step,      setStep]      = useState('choose')
   const [giftName,  setGiftName]  = useState('')
   const [giftEmail, setGiftEmail] = useState('')
@@ -60,7 +60,7 @@ export default function GiftModal({ item, onClose, onGifted }) {
           <div>
             <p className="gm-eyebrow">{item.id}</p>
             <h3 className="gm-title">{item.name}</h3>
-            <p className="gm-price">{fmt(item.price)}</p>
+            <p className="gm-price">{currency} {currency == 'NGN' ? fmt(item.ng_price) : fmt(item.price)}</p>
           </div>
           <button className="gm-close" onClick={onClose}>✕</button>
         </div>
@@ -120,48 +120,50 @@ export default function GiftModal({ item, onClose, onGifted }) {
                 <input className="gm-field-input" placeholder="Full name" value={giftName} onChange={e => setGiftName(e.target.value)} />
               </div>
               <div className="gm-field">
-                <label className="gm-field-label">Your Email (optional)</label>
+                <label className="gm-field-label">Your Email (optional, for tracking)</label>
                 <input className="gm-field-input" type="email" placeholder="For confirmation" value={giftEmail} onChange={e => setGiftEmail(e.target.value)} />
               </div>
             </div>
 
             {/* Reference box */}
-            <div className="gm-reference-box">
+            {/* <div className="gm-reference-box">
               <p className="gm-reference-label">Use this as your payment reference</p>
               <p className="gm-reference-value">{reference}</p>
               <p className="gm-reference-hint">{config.payment.referenceFormat}</p>
-            </div>
+            </div> */}
 
             {/* Bank card */}
             <div className="gm-payment-cards">
-              <div className="gm-payment-card">
+              {currency == 'NGN' && <div className="gm-payment-card">
                 <div className="gm-payment-card-header">
-                  <span className="gm-payment-logo">{config.payment.bank.logo}</span>
+                  <img src="/ecobank_logo.png" alt="logo" className="gm-payment-logo-img" />
                   <span className="gm-payment-provider">{config.payment.bank.name}</span>
                 </div>
                 <div className="gm-payment-row"><span>Account Name</span><strong>{config.payment.bank.accountName}</strong></div>
                 <div className="gm-payment-row"><span>Account No.</span><strong>{config.payment.bank.accountNumber}</strong></div>
-                <div className="gm-payment-row"><span>Branch</span><strong>{config.payment.bank.branch}</strong></div>
-                <div className="gm-payment-row amount"><span>Amount</span><strong>{fmt(item.price)}</strong></div>
-              </div>
+                {/* <div className="gm-payment-row"><span>Branch</span><strong>{config.payment.bank.branch}</strong></div> */}
+                <div className="gm-payment-row amount"><span>Amount</span><strong>{currency} {fmt(item.ng_price)}</strong></div>
+              </div>}
 
-              <div className="gm-payment-card">
+              {currency == 'GHS' && <div className="gm-payment-card">
                 <div className="gm-payment-card-header">
-                  <span className="gm-payment-logo">{config.payment.mobileMoney.logo}</span>
+                  <img src="/telecel-cash.png" alt="logo" className="gm-payment-logo-img" />
                   <span className="gm-payment-provider">{config.payment.mobileMoney.provider}</span>
                 </div>
                 <div className="gm-payment-row"><span>Name</span><strong>{config.payment.mobileMoney.accountName}</strong></div>
                 <div className="gm-payment-row"><span>Number</span><strong>{config.payment.mobileMoney.number}</strong></div>
-                <div className="gm-payment-row amount"><span>Amount</span><strong>{fmt(item.price)}</strong></div>
-              </div>
+                <div className="gm-payment-row amount"><span>Amount</span><strong>{currency} {fmt(item.price)}</strong></div>
+              </div>}
             </div>
+
+            <p className="gm-intro">You can proceed to send the money via your bank app. After doing so, click "Money Sent".</p>
 
             <button
               className="gm-submit-btn"
               disabled={!giftName.trim() || submitting}
               onClick={() => submitAction('money')}
             >
-              {submitting ? 'Confirming…' : "I've Sent the Money"}
+              {submitting ? 'Confirming…' : "Money Sent"}
             </button>
             <p className="gm-submit-note">Clicking this marks the item as pending confirmation. We will verify and update the registry shortly.</p>
           </div>
@@ -173,7 +175,7 @@ export default function GiftModal({ item, onClose, onGifted }) {
         {step === 'book' && (
           <div className="gm-body">
             <button className="gm-back" onClick={() => setStep('choose')}>← Back</button>
-            <p className="gm-intro">Reserve this item and bring it as a gift on the day.</p>
+            <p className="gm-intro">Reserve this item to be brought as a gift on the wedding day.</p>
 
             <div className="gm-fields">
               <div className="gm-field">
@@ -220,11 +222,11 @@ export default function GiftModal({ item, onClose, onGifted }) {
               <div className="gm-confirm-item">
                 <span className="gm-confirm-item-id">{item.id}</span>
                 <span className="gm-confirm-item-name">{item.name}</span>
-                <span className="gm-confirm-item-price">{fmt(item.price)}</span>
+                <span className="gm-confirm-item-price">{currency} {currency == 'NGN' ? fmt(item.ng_price) : fmt(item.price)}</span>
               </div>
               <p className="gm-confirm-text" style={{ marginTop: '0.8rem' }}>
-                This item will show as <strong>Pending</strong> on the registry until we receive it.
-                Please bring it to the <strong>Traditional</strong> or <strong>Reception</strong>.
+                This item will show as <strong>Pending</strong> on the registry until delivered.<br/>
+                Thank you for your intentions to gift this!
               </p>
             </div>
 
@@ -255,7 +257,7 @@ export default function GiftModal({ item, onClose, onGifted }) {
                 <input className="gm-field-input" placeholder="Full name" value={giftName} onChange={e => setGiftName(e.target.value)} />
               </div>
               <div className="gm-field">
-                <label className="gm-field-label">Your Email (optional)</label>
+                <label className="gm-field-label">Your Email (optional for tracking)</label>
                 <input className="gm-field-input" type="email" placeholder="For confirmation" value={giftEmail} onChange={e => setGiftEmail(e.target.value)} />
               </div>
             </div>
@@ -313,5 +315,5 @@ export default function GiftModal({ item, onClose, onGifted }) {
 
 const fmt = (p) => {
   const n = parseFloat(String(p).replace(/[^0-9.]/g, ''))
-  return isNaN(n) ? String(p) : '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 })
+  return isNaN(n) ? String(p) : n.toLocaleString('en-US', { maximumFractionDigits: 0 })
 }

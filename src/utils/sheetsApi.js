@@ -30,7 +30,27 @@ const PROXY_PREFIX = '/api/sheets'   // matched by vite proxy in dev
  */
 export async function fetchRegistry() {
   const res  = await fetch(PROXY_PREFIX)
-  const data = await res.json()
+  let data = await res.json();
+  
+  let nairaXchange = 130;
+  if (Array.isArray(data.items)) {
+    for(let item of data.items) {
+
+      // naira conversion
+      if (item.price) {
+        item.ng_price = item.price * nairaXchange;
+      }
+
+      // google drive images
+      let isDriveURL = item.image?.includes('drive.google.com') ? true : false;
+      if (isDriveURL) {
+        let spliturl = item.image.split('/');
+        let newURL = spliturl[5] ? `https://drive.google.com/thumbnail?id=${spliturl[5]}&sz=w1000` : 'https://images.unsplash.com/photo-1606293926075-69a5658f1c1c?w=400&q=80';
+        item.image = newURL;
+      }
+    }
+  }
+
   return data.items || []
 }
 

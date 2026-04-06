@@ -6,7 +6,7 @@ import GiftModal from '../components/GiftModal'
 
 const fmt = (p) => {
   const n = parseFloat(String(p).replace(/[^0-9.]/g, ''))
-  return isNaN(n) ? String(p) : 'GHS' + n.toLocaleString('en-US', { maximumFractionDigits: 0 })
+  return isNaN(n) ? String(p) : n.toLocaleString('en-US', { maximumFractionDigits: 0 })
 }
 
 function getRibbon(item) {
@@ -19,21 +19,21 @@ function getRibbon(item) {
   return { cls: 'ribbon-available', label: 'Available' }
 }
 
-function RegistryCard({ item, idx, onGift }) {
+function RegistryCard({ item, idx, onGift, currency }) {
   const ribbon      = getRibbon(item)
   const remaining   = Math.max(0, item.quantity - item.purchased)
   const pct         = Math.min(100, Math.round((item.purchased / item.quantity) * 100))
-  const isUnavailable = item.status === 'fulfilled' || item.status === 'pending' || remaining === 0
+  const isUnavailable = item.status === 'fulfilled' || remaining === 0 //|| item.status === 'pending'
 
   return (
     <div className="w-reg-card" style={{ animationDelay: `${idx * 0.06}s` }}>
       <div className="w-reg-img-wrap">
         <img
           className="w-reg-img"
-          src={item.image || 'https://images.unsplash.com/photo-1606293926075-69a5658f1c1c?w=400&q=80'}
+          src={item.image || '/black-mist.jfif'}
           alt={item.name}
           loading="lazy"
-          onError={e => { e.target.src = 'https://images.unsplash.com/photo-1606293926075-69a5658f1c1c?w=400&q=80' }}
+          // onError={e => { e.target.src = 'https://images.unsplash.com/photo-1606293926075-69a5658f1c1c?w=400&q=80' }}
         />
         <div className={`w-reg-ribbon ${ribbon.cls}`}>{ribbon.label}</div>
         <div className="w-reg-item-id">{item.id}</div>
@@ -49,7 +49,7 @@ function RegistryCard({ item, idx, onGift }) {
         <div className="w-reg-desc">{item.description}</div>
 
         <div className="w-reg-meta">
-          <div className="w-reg-price">{fmt(item.price)}</div>
+          <div className="w-reg-price">{currency} {currency == 'NGN' ? fmt(item.ng_price) : fmt(item.price)}</div>
           <div className="w-reg-qty">
             <span className="qty-left">{remaining} remaining</span><br />
             {item.purchased} of {item.quantity} gifted
@@ -74,6 +74,7 @@ function RegistryCard({ item, idx, onGift }) {
 
 export default function RegistryPage({ items = [], setItems = () => {}, status = 'loading' }) {
   const [filter,    setFilter]    = useState('All')
+  const [currency, setCurrency]    = useState('GHS');
   const [barWidth,  setBarWidth]  = useState(0)
   const [modalItem, setModalItem] = useState(null)
 
@@ -88,8 +89,9 @@ export default function RegistryPage({ items = [], setItems = () => {}, status =
     setItems(prev => prev.map(i => i.id === itemId ? { ...i, status: 'pending' } : i))
   }
 
+  const currencies = ['GHS', 'NGN'];
   const categories = ['All', ...new Set(items.map(i => i.category).filter(Boolean))]
-  const visible    = filter === 'All' ? items : items.filter(i => i.category === filter)
+  const visible    = filter === 'All' ? items : items.filter(i => i.category === filter);
 
   return (
     <div className="w-reg-page">
@@ -119,6 +121,11 @@ export default function RegistryPage({ items = [], setItems = () => {}, status =
                 <div className="w-reg-progress-fill" style={{ width: `${barWidth}%` }} />
               </div>
             </div>
+
+            <div className="w-reg-filters" style={{padding:'0 2rem'}}>
+              <button className={`w-filter-btn${currency === 'GHS' ? ' active' : ''}`} onClick={() => setCurrency('GHS')}>GHS</button>
+              <button className={`w-filter-btn${currency === 'NGN' ? ' active' : ''}`} onClick={() => setCurrency('NGN')}>NGN</button>
+            </div>
           </div>
 
           <div className="w-reg-filters">
@@ -135,7 +142,7 @@ export default function RegistryPage({ items = [], setItems = () => {}, status =
 
           <div className="w-reg-grid">
             {visible.map((item, i) => (
-              <RegistryCard key={`${item.id}-${i}`} item={item} idx={i} onGift={setModalItem} />
+              <RegistryCard key={`${item.id}-${i}`} item={item} idx={i} onGift={setModalItem} currency={currency} />
             ))}
           </div>
         </>
@@ -157,6 +164,7 @@ export default function RegistryPage({ items = [], setItems = () => {}, status =
       {modalItem && (
         <GiftModal
           item={modalItem}
+          currency={currency}
           onClose={() => setModalItem(null)}
           onGifted={(id) => { handleGifted(id); setModalItem(null) }}
         />
