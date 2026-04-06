@@ -22,8 +22,8 @@
 //  is in place. See vite.config.js for the proxy config.
 // ═══════════════════════════════════════════════════════════
 
-const PROXY_PREFIX = '/api/sheets'   // matched by vite proxy in dev
-                                     // matched by vercel.json rewrite in prod
+const DEV_PROXY_PREFIX = '/api/sheets'   // matched by vite proxy in dev
+const PROXY_PREFIX = 'https://script.google.com/macros/s/AKfycbwm7TM9Br7iy0qqq0IhyifH9Y699GBMsTqzd_vL_muvR2tt16WI2zLskv6FaOhkqsJi/exec'
 
 /**
  * Fetch registry items via proxied GET
@@ -60,7 +60,7 @@ export async function fetchRegistry() {
 export async function postToSheet(payload) {
   const res = await fetch(PROXY_PREFIX, {
     method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
+    // headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify(payload),
   })
   return res.json()

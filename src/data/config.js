@@ -22,8 +22,8 @@ const config = {
   // ── Google Sheets integration ────────────────────────────
   // Paste your Apps Script Web App URL into both fields below.
   // Leave empty to see demo/placeholder data.
-  REGISTRY_URL: 'https://script.google.com/macros/s/AKfycbw__O7Tt_Ti2W2SUZb-iyqv-Kl_dvGZCXTtYF9a-zyVPVEmfm97Uzc_4xQO9QdsWVEs/exec',
-  RSVP_URL:     'https://script.google.com/macros/s/AKfycbw__O7Tt_Ti2W2SUZb-iyqv-Kl_dvGZCXTtYF9a-zyVPVEmfm97Uzc_4xQO9QdsWVEs/exec',
+  REGISTRY_URL: 'https://script.google.com/macros/s/AKfycbz4vuYjGzG_lg2zEfKZXql-kA0r89kYdtDr6fnYNXVvnt2f4UJ7QwCiW3S8C-imEsDM/exec',
+  RSVP_URL:     'https://script.google.com/macros/s/AKfycbz4vuYjGzG_lg2zEfKZXql-kA0r89kYdtDr6fnYNXVvnt2f4UJ7QwCiW3S8C-imEsDM/exec',
 
   // ── Images ──────────────────────────────────────────────
   // Replace these with your own photo URLs, or drop photos into

@@ -146,7 +146,7 @@ export default function RsvpPage() {
             <h2>We received your RSVP!</h2>
             <p>
               Thank you so much — we cannot wait to celebrate with you.<br />
-              A confirmation has been sent to your email.
+              The couple has been notified on your response.
             </p>
           </div>
         )}
