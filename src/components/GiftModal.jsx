@@ -147,7 +147,7 @@ export default function GiftModal({ item, onClose, onGifted, currency }) {
 
               {currency == 'GHS' && <div className="gm-payment-card">
                 <div className="gm-payment-card-header">
-                  <img src="/telecel-cash.png" alt="logo" className="gm-payment-logo-img" />
+                  <img src="/mtn-momo.jpg" alt="logo" className="gm-payment-logo-img" />
                   <span className="gm-payment-provider">{config.payment.mobileMoney.provider}</span>
                 </div>
                 <div className="gm-payment-row"><span>Name</span><strong>{config.payment.mobileMoney.accountName}</strong></div>

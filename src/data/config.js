@@ -64,10 +64,10 @@ const config = {
       branch:        'Accra Main Branch',
     },
     mobileMoney: {
-      provider:    'Telecel Cash',             // e.g. MTN, Vodafone, AirtelTigo
+      provider:    'MTN Mobile Money',             // e.g. MTN, Vodafone, AirtelTigo
       logo:        '📱',                           // Replace with provider logo URL if you have one
-      number:      '050 950 2236',
-      accountName: 'Jonathan Gbaja',
+      number:      '053 763 1575',
+      accountName: 'Emmanuella Jectey-Asare',
     },
     referenceFormat: 'Use your name + item ID as reference (e.g. "John Smith – EJ-001")',
   },
