@@ -113,11 +113,26 @@ export default function HomePage({ navigate }) {
       </section>
 
       {/* ── DETAILS ── */}
-      {/* <section className="w-details">
+      <section className="w-details">
         <span className="w-eyebrow" style={{ textAlign: 'center', color: 'var(--gold)' }}>
-          Wedding Details
+          MORE?
         </span>
+
         <div className="w-details-grid">
+          {[
+            { label: 'Registry', description: 'View our gift registry', page: 'registry' },
+            { label: 'FAQs', description: 'Frequently asked questions', page: 'faqs' },
+            { label: 'RSVP', description: 'Confirm your attendance', page: 'rsvp' },
+          ].map(item => (
+            <div key={item.page} className="w-detail-card">
+              <p className="w-detail-description mb-4" style={{marginBottom: '1em'}}>{item.description}</p>
+              <button className="w-btn" onClick={() => navigate(item.page)}>
+                <span>{item.label}</span>
+              </button>
+            </div>
+          ))}
+        </div>
+        {/* <div className="w-details-grid">
           {config.details.map(d => (
             <div key={d.label} className="w-detail-card">
               <span className="w-detail-icon">{d.icon}</span>
@@ -126,8 +141,8 @@ export default function HomePage({ navigate }) {
               <small>{d.note}</small>
             </div>
           ))}
-        </div>
-      </section> */}
+        </div> */}
+      </section>
 
       <Footer />
     </div>

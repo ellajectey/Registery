@@ -77,7 +77,7 @@ export default function App() {
     <div>
       <Nav page={page} navigate={navigate} />
       <div style={{ paddingTop: page === 'home' ? 0 : 70 }}>
-        {page === 'home' && <HomePage />}
+        {page === 'home' && <HomePage navigate={navigate} />}
         {page === 'registry' && (
           <RegistryPage items={registryItems} setItems={setRegistryItems} status={registryStatus} />
         )}

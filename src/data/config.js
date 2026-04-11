@@ -22,8 +22,8 @@ const config = {
   // ── Google Sheets integration ────────────────────────────
   // Paste your Apps Script Web App URL into both fields below.
   // Leave empty to see demo/placeholder data.
-  REGISTRY_URL: 'https://script.google.com/macros/s/AKfycbz4vuYjGzG_lg2zEfKZXql-kA0r89kYdtDr6fnYNXVvnt2f4UJ7QwCiW3S8C-imEsDM/exec',
-  RSVP_URL:     'https://script.google.com/macros/s/AKfycbz4vuYjGzG_lg2zEfKZXql-kA0r89kYdtDr6fnYNXVvnt2f4UJ7QwCiW3S8C-imEsDM/exec',
+  REGISTRY_URL: 'https://script.google.com/macros/s/AKfycbwm7TM9Br7iy0qqq0IhyifH9Y699GBMsTqzd_vL_muvR2tt16WI2zLskv6FaOhkqsJi/exec',
+  RSVP_URL:     'https://script.google.com/macros/s/AKfycbwm7TM9Br7iy0qqq0IhyifH9Y699GBMsTqzd_vL_muvR2tt16WI2zLskv6FaOhkqsJi/exec',
 
   // ── Images ──────────────────────────────────────────────
   // Replace these with your own photo URLs, or drop photos into
@@ -31,7 +31,7 @@ const config = {
   heroImage:    '/closeup-casual.jpg',
   heroImage2:    '/couch-cam-1.jpg',
   heroImage3:    '/couch-face-1.jpg',
-  heroImage4:    '/couch-face-2-cropped.jpg',
+  heroImage4:    '/couch-face-2-cropped.webp',
   heroImage5:    '/formal.jpg',
   galleryImage: '/closeup-casual-cropped.jpg',
 
