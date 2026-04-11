@@ -121,7 +121,7 @@ export default function HomePage({ navigate }) {
         <div className="w-details-grid">
           {[
             { label: 'Registry', description: 'View our gift registry', page: 'registry' },
-            { label: 'FAQs', description: 'Frequently asked questions', page: 'faqs' },
+            { label: 'FAQs', description: 'Frequently asked questions', page: 'faq' },
             { label: 'RSVP', description: 'Confirm your attendance', page: 'rsvp' },
           ].map(item => (
             <div key={item.page} className="w-detail-card">
