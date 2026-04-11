@@ -29,7 +29,7 @@ const PROXY_PREFIX = 'https://script.google.com/macros/s/AKfycbwm7TM9Br7iy0qqq0I
  * Fetch registry items via proxied GET
  */
 export async function fetchRegistry() {
-  const res  = await fetch(DEV_PROXY_PREFIX)
+  const res  = await fetch(PROXY_PREFIX)
   let data = await res.json();
   
   let nairaXchange = 130;
@@ -58,7 +58,7 @@ export async function fetchRegistry() {
  * Post an RSVP or gift action via proxied POST
  */
 export async function postToSheet(payload) {
-  const res = await fetch(DEV_PROXY_PREFIX, {
+  const res = await fetch(PROXY_PREFIX, {
     method:  'POST',
     // headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify(payload),
